@@ -284,26 +284,18 @@ for (let i=pellets.length - 1; i > 0; i--){
 
    }
 
-   if (ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height
-    && !(ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x)
-    && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
-    && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
+   else if ( !(ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x))
+   {
    console.log('We are colliding on Left wall');
- }
+   }
 
- if (ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height
-  && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
-  && !(ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y)
-  && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
- console.log('We are colliding on Up wall');
-}
+  else if (!(ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y)) {
+  console.log('We are colliding on Up wall');
+  }
 
-if (ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height
-  && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
-  && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
-  && !(ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width)) {
-  console.log('We are colliding on Right wall');
-}
+  else {
+    console.log('We are colliding on Right wall');
+  }
 
 
 
