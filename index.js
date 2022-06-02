@@ -82,7 +82,7 @@ class Ghost {
     let stepInX = (Math.hypot(((this.position.x + this.stepSpeed) - this.target.x ),((this.position.y) - this.target.y))) 
     let stepInY = (Math.hypot(((this.position.x) - this.target.x ),((this.position.y + this.stepSpeed) - this.target.y))) 
    
-   if (stepInX<stepInY){
+   if ((stepInX<stepInY) && ! (this.wallLeft || this.wallRight) ){
      this.velocity.x = this.stepSpeed;
      this.velocity.y = 0;
    }
@@ -95,15 +95,15 @@ class Ghost {
    }
  }
 
- if(this.wallUp || this.wallDown)
- {
-   this.velocity.y=0
- }
+//  if(this.wallUp || this.wallDown)
+//  {
+//    this.velocity.y=0
+//  }
 
- if(this.wallLeft || this.wallRight)
- {
-   this.velocity.x=0;
- }
+//  if(this.wallLeft || this.wallRight)
+//  {
+//    this.velocity.x=0;
+//  }
 
 
     this.position.x += this.velocity.x;
@@ -274,28 +274,38 @@ for (let i=pellets.length - 1; i > 0; i--){
       player.velocity.x = 0;
       player.velocity.y = 0;
     }
+    ghost.wallUp=false;
+    ghost.wallDown=false;
+    ghost.wallLeft=false;
+    ghost.wallRight=false;
 
     if (!(ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height)
-      && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
-      && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
-      && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
-        
-     console.log('We are colliding on Down wall');
-
-   }
-
-   else if ( !(ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x))
-   {
-   console.log('We are colliding on Left wall');
-   }
-
-  else if (!(ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y)) {
-  console.log('We are colliding on Up wall');
+    && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
+    && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
+    && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
+      
+      console.log('We are colliding on Up wall');
+      ghost.wallDown=true;
+   
   }
-
-  else {
+  
+  else if ( !(ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x))
+  {
     console.log('We are colliding on Right wall');
+    ghost.wallDown=true;
   }
+  
+  else if (!(ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y)) {
+    console.log('We are colliding on Down wall');
+    ghost.wallDown=true;
+  }
+  
+  else {
+    console.log('We are colliding on Left wall');
+    ghost.wallDown=true;
+}
+
+
 
 
 
