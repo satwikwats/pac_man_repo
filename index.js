@@ -45,6 +45,10 @@ class Ghost {
     this.target = target;
     this.radius = 10;
     this.stepSpeed =1;
+    this.wallUp = false;
+    this.wallDown = false;
+    this.wallLeft = false;
+    this.wallRight = false;
   }
 
   draw() {
@@ -85,7 +89,20 @@ class Ghost {
    else{
      this.velocity.x = 0;
      this.velocity.y = this.stepSpeed;
+
+
+
    }
+ }
+
+ if(this.wallUp || this.wallDown)
+ {
+   this.velocity.y=0
+ }
+
+ if(this.wallLeft || this.wallRight)
+ {
+   this.velocity.x=0;
  }
 
 
@@ -257,6 +274,42 @@ for (let i=pellets.length - 1; i > 0; i--){
       player.velocity.x = 0;
       player.velocity.y = 0;
     }
+
+    if (!(ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height)
+      && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
+      && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
+      && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
+        
+     console.log('We are colliding on Down wall');
+
+   }
+
+   if (ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height
+    && !(ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x)
+    && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
+    && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
+   console.log('We are colliding on Left wall');
+ }
+
+ if (ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height
+  && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
+  && !(ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y)
+  && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
+ console.log('We are colliding on Up wall');
+}
+
+if (ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height
+  && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
+  && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
+  && !(ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width)) {
+  console.log('We are colliding on Right wall');
+}
+
+
+
+
+
+
   });
   player.update();
   ghost.target.x= player.position.x;
