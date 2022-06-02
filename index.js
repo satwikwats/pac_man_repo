@@ -44,7 +44,7 @@ class Ghost {
     this.velocity = velocity;
     this.target = target;
     this.radius = 10;
-    this.stepSpeed =5;
+    this.stepSpeed =1;
   }
 
   draw() {
@@ -59,32 +59,32 @@ class Ghost {
     this.draw();
     // if (Math.hypot(((this.position.x + this.position.velocity.x) - this.target.position.x ),((this.position.y) - this.target.position.y)))
 
-    if (this.position.x > this.target.position.x) 
+    if (this.position.x > this.target.x) 
     {
-     let stepInX = (Math.hypot(((this.position.x - this.stepSpeed) - this.target.position.x ),((this.position.y) - this.target.position.y))) 
-     let stepInY = (Math.hypot(((this.position.x) - this.target.position.x ),((this.position.y - this.stepSpeed) - this.target.position.y))) 
+     let stepInX = (Math.hypot(((this.position.x - this.stepSpeed) - this.target.x ),((this.position.y) - this.target.y))) 
+     let stepInY = (Math.hypot(((this.position.x) - this.target.x ),((this.position.y - this.stepSpeed) - this.target.y))) 
     
     if (stepInX<stepInY){
-      this.velocity.x = 5;
+      this.velocity.x = -this.stepSpeed;
       this.velocity.y = 0;
     }
     else{
       this.velocity.x = 0;
-      this.velocity.y = 5;
+      this.velocity.y = -this.stepSpeed;
     }
   }
 
   else  {
-    let stepInX = (Math.hypot(((this.position.x + this.stepSpeed) - this.target.position.x ),((this.position.y) - this.target.position.y))) 
-    let stepInY = (Math.hypot(((this.position.x) - this.target.position.x ),((this.position.y + this.stepSpeed) - this.target.position.y))) 
+    let stepInX = (Math.hypot(((this.position.x + this.stepSpeed) - this.target.x ),((this.position.y) - this.target.y))) 
+    let stepInY = (Math.hypot(((this.position.x) - this.target.x ),((this.position.y + this.stepSpeed) - this.target.y))) 
    
    if (stepInX<stepInY){
-     this.velocity.x = 5;
+     this.velocity.x = this.stepSpeed;
      this.velocity.y = 0;
    }
    else{
      this.velocity.x = 0;
-     this.velocity.y = 5;
+     this.velocity.y = this.stepSpeed;
    }
  }
 
@@ -155,8 +155,8 @@ const player = new Player({
 });
 const ghost = new Ghost({
   position:{
-    x: 35 * Boundary.width + Boundary.width/2,
-    y: 30 * Boundary.height + Boundary.height/2,
+    x: 16 * Boundary.width - Boundary.width/2,
+    y: 20 * Boundary.height - Boundary.height/2,
   },
   velocity: {
     x: 0,
@@ -259,6 +259,9 @@ for (let i=pellets.length - 1; i > 0; i--){
     }
   });
   player.update();
+  ghost.target.x= player.position.x;
+  ghost.target.y= player.position.y;
+
   ghost.update();
   
 
