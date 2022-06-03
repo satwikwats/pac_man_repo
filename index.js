@@ -234,21 +234,82 @@ map.forEach((row, i) => {
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
-  // player.velocity.x = 0;
-  // player.velocity.y = 0;
+ 
 
   if (keys.w.pressed && lastkey === 'w') {
-    player.velocity.y = -4;
-    player.velocity.x = 0;
-  } else if (keys.a.pressed && lastkey === 'a') {
-    player.velocity.x = -4;
-    player.velocity.y = 0;
+    boundaries.forEach((boundary) => {
+    if (collisionHappening({
+      char: {...player,
+      velocity:{
+        x:0,
+        y:-5,
+      }
+      } ,
+      block: boundary,
+    })) 
+    {
+      player.velocity.y = 0;
+    }
+
+    else
+    player.velocity.y = -5;
+  })
+}
+    
+    else if (keys.a.pressed && lastkey === 'a') {
+      boundaries.forEach((boundary) => {
+        if (collisionHappening({
+          char: {...player,
+          velocity:{
+            x:-5,
+            y:0,
+          }
+          } ,
+          block: boundary,
+        })) 
+        {
+          player.velocity.x = 0;
+        }
+    
+        else
+        player.velocity.x = -5;
+      }) 
   } else if (keys.s.pressed && lastkey === 's') {
-    player.velocity.y = 4;
-    player.velocity.x = 0;
+    boundaries.forEach((boundary) => {
+      if (collisionHappening({
+        char: {...player,
+        velocity:{
+          x:0,
+          y:5,
+        }
+        } ,
+        block: boundary,
+      })) 
+      {
+        player.velocity.y = 0;
+      }
+  
+      else
+      player.velocity.y = 5;
+    })
   } else if (keys.d.pressed && lastkey === 'd') {
-    player.velocity.x = 4;
-    player.velocity.y = 0;
+    boundaries.forEach((boundary) => {
+      if (collisionHappening({
+        char: {...player,
+        velocity:{
+          x:5,
+          y:0,
+        }
+        } ,
+        block: boundary,
+      })) 
+      {
+        player.velocity.x = 0;
+      }
+  
+      else
+      player.velocity.x = 5;
+    })
   }
 // This part avoids collision with the wall
 // This part reders pellets
@@ -264,56 +325,34 @@ for (let i=pellets.length - 1; i > 0; i--){
     
   }
 };
+
+function collisionHappening({char, block})
+{
+  return((char.position.y - char.radius + char.velocity.y <= block.position.y + block.height
+    && char.radius + char.position.x + char.velocity.x >= block.position.x
+    && char.position.y + char.radius + char.velocity.y >= block.position.y
+    && char.position.x - char.radius + char.velocity.x <= block.position.x + block.width) )
+}
+
   boundaries.forEach((boundary) => {
     boundary.draw();
-    if (player.position.y - player.radius + player.velocity.y <= boundary.position.y + boundary.height
-       && player.radius + player.position.x + player.velocity.x >= boundary.position.x
-       && player.position.y + player.radius + player.velocity.y >= boundary.position.y
-       && player.position.x - player.radius + player.velocity.x <= boundary.position.x + boundary.width) {
+
+    if (collisionHappening({
+      char: player ,
+      block: boundary,
+    })) 
+    {
       // console.log('We are colliding');
       player.velocity.x = 0;
       player.velocity.y = 0;
     }
-    ghost.wallUp=false;
-    ghost.wallDown=false;
-    ghost.wallLeft=false;
-    ghost.wallRight=false;
-
-    if (!(ghost.position.y - ghost.radius + ghost.velocity.y <= boundary.position.y + boundary.height)
-    && ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x
-    && ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y
-    && ghost.position.x - ghost.radius + ghost.velocity.x <= boundary.position.x + boundary.width) {
-      
-      console.log('We are colliding on Up wall');
-      ghost.wallDown=true;
-   
-  }
-  
-  else if ( !(ghost.radius + ghost.position.x + ghost.velocity.x >= boundary.position.x))
-  {
-    console.log('We are colliding on Right wall');
-    ghost.wallDown=true;
-  }
-  
-  else if (!(ghost.position.y + ghost.radius + ghost.velocity.y >= boundary.position.y)) {
-    console.log('We are colliding on Down wall');
-    ghost.wallDown=true;
-  }
-  
-  else {
-    console.log('We are colliding on Left wall');
-    ghost.wallDown=true;
-}
-
-
-
-
-
-
-
 
   });
   player.update();
+  player.velocity.x = 0;
+  player.velocity.y = 0;
+
+  
   ghost.target.x= player.position.x;
   ghost.target.y= player.position.y;
 
