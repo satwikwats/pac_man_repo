@@ -114,7 +114,7 @@ class Player {
   constructor({ position, velocity }) {
     this.position = position;
     this.velocity = velocity;
-    this.radius = 10;
+    this.radius = 12;
   }
 
   draw() {
@@ -135,6 +135,7 @@ const map = [
   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
   ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
   ['-', '.', '-', '.', '.', '.', '-', '-', '-', '-', '.', '.', '.', '-', '.', '.', '-'],
+  ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
   ['-', '.', '.', '.', '-', '.', '.', '-', '-', '.', '.', '-', '.', '.', '.', '.', '-'],
   ['-', '-', '-', '.', '-', '-', '.', '[', ']', '.', '-', '-', '.', '.', '-', '-', '-'],
   ['-', '.', '-', '.', '-', '^', '.', '.', '.', '.', '.', '-', '.', '.', '-', '.', '-'],
@@ -150,6 +151,7 @@ const map = [
   ['-', '.', '-', '.', '-', '-', '.', '.', '.', '.', '-', '-', '.', '.', '-', '.', '-'],
   ['-', '-', '-', '.', '-', '.', '.', '[', ']', '.', '.', '-', '.', '.', '-', '-', '-'],
   ['-', '.', '.', '.', '.', '.', '.', '-', '-', '.', '.', '.', '.', '.', '.', '.', '-'],
+  ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
   ['-', '.', '-', '.', '.', '.', '-', '-', '-', '-', '.', '.', '.', '-', '.', '.', '-'],
   ['-', '.', 'b', '.', '[', '5', ']', '.', 'b', '.', '.', '.', '.', '.', '.', '.', '-'],
 
@@ -163,7 +165,7 @@ const pellets = [];
 const player = new Player({
   position: {
     x: Boundary.width * 1.5,
-    y: Boundary.height *1.5,
+    y: Boundary.width *1.5,
   },
   velocity: {
     x: 0,
@@ -225,34 +227,38 @@ map.forEach((row, i) => {
           break; 
       
 
-      default: {
-        break;
-      }
-    }
-  });
-});
-function animate() {
-  requestAnimationFrame(animate);
-  c.clearRect(0, 0, canvas.width, canvas.height);
- 
-
+          default: {
+            break;
+          }
+        }
+      });
+    });
+    function animate() {
+      requestAnimationFrame(animate);
+      c.clearRect(0, 0, canvas.width, canvas.height);
+      
+      player.update();
+      player.velocity.x = 0;
+      player.velocity.y = 0;
+      
   if (keys.w.pressed && lastkey === 'w') {
     boundaries.forEach((boundary) => {
     if (collisionHappening({
       char: {...player,
       velocity:{
         x:0,
-        y:-5,
+        y:-7,
       }
       } ,
       block: boundary,
     })) 
     {
       player.velocity.y = 0;
+      console.log('mf going to hit the top wall, y deactivated')
     }
 
     else
-    player.velocity.y = -5;
+    player.velocity.y = -7;
   })
 }
     
@@ -261,7 +267,7 @@ function animate() {
         if (collisionHappening({
           char: {...player,
           velocity:{
-            x:-5,
+            x:-7,
             y:0,
           }
           } ,
@@ -272,7 +278,7 @@ function animate() {
         }
     
         else
-        player.velocity.x = -5;
+        player.velocity.x = -7;
       }) 
   } else if (keys.s.pressed && lastkey === 's') {
     boundaries.forEach((boundary) => {
@@ -280,7 +286,7 @@ function animate() {
         char: {...player,
         velocity:{
           x:0,
-          y:5,
+          y:7,
         }
         } ,
         block: boundary,
@@ -290,14 +296,14 @@ function animate() {
       }
   
       else
-      player.velocity.y = 5;
+      player.velocity.y = 7;
     })
   } else if (keys.d.pressed && lastkey === 'd') {
     boundaries.forEach((boundary) => {
       if (collisionHappening({
         char: {...player,
         velocity:{
-          x:5,
+          x:7,
           y:0,
         }
         } ,
@@ -308,7 +314,7 @@ function animate() {
       }
   
       else
-      player.velocity.x = 5;
+      player.velocity.x = 7;
     })
   }
 // This part avoids collision with the wall
@@ -348,9 +354,6 @@ function collisionHappening({char, block})
     }
 
   });
-  player.update();
-  player.velocity.x = 0;
-  player.velocity.y = 0;
 
   
   ghost.target.x= player.position.x;
