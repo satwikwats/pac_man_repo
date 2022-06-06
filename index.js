@@ -238,8 +238,8 @@ map.forEach((row, i) => {
       c.clearRect(0, 0, canvas.width, canvas.height);
       
       player.update();
-      // player.velocity.x = 0;
-      // player.velocity.y = 0;
+      player.velocity.x = 0;
+      player.velocity.y = 0;
       
   if (keys.w.pressed && lastkey === 'w') {
     boundaries.forEach((boundary) => {
