@@ -162,6 +162,8 @@ const map = [
 
 const boundaries = [];
 const pellets = [];
+const ghosts = [];
+let collisions =[];
 const player = new Player({
   position: {
     x: Boundary.width * 1.5,
@@ -238,6 +240,70 @@ map.forEach((row, i) => {
       c.clearRect(0, 0, canvas.width, canvas.height);
       
       player.update();
+
+      ghosts.forEach((ghost)=>{
+        ghost.update()
+
+        const collisions = [];
+        boundaries.forEach((boundary) => {
+          if (!collisions.includes('up') && collisionHappening({
+            char: {...ghost,
+            velocity:{
+              x:0,
+              y:-7,
+            }
+            } ,
+            block: boundary,
+          })) 
+          {
+            collisions.push('up')
+            // cosole.log('ghost crashing up')
+          }
+          if (!collisions.includes('down') && collisionHappening({
+            char: {...ghost,
+            velocity:{
+              x:0,
+              y:7,
+            }
+            } ,
+            block: boundary,
+          })) 
+          {
+            collisions.push('down')
+            // cosole.log('ghost crashing up')
+          }
+          if (!collisions.includes('left') && collisionHappening({
+            char: {...ghost,
+            velocity:{
+              x:-7,
+              y:0,
+            }
+            } ,
+            block: boundary,
+          })) 
+          {
+            collisions.push('left')
+            // cosole.log('ghost crashing up')
+          }
+          if (!collisions.includes('right') && collisionHappening({
+            char: {...ghost,
+            velocity:{
+              x:7,
+              y:0,
+            }
+            } ,
+            block: boundary,
+          })) 
+          {
+            collisions.push('right')
+            // cosole.log('ghost crashing up')
+          }
+      
+        })
+      })
+
+        
+
       player.velocity.x = 0;
       player.velocity.y = 0;
       
