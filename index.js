@@ -44,11 +44,8 @@ class Ghost {
     this.velocity = velocity;
     this.target = target;
     this.radius = 10;
-    this.stepSpeed =1;
-    this.wallUp = false;
-    this.wallDown = false;
-    this.wallLeft = false;
-    this.wallRight = false;
+
+    this.previousCollisions = []
   }
 
   draw() {
@@ -62,53 +59,10 @@ class Ghost {
   update() {
     this.draw();
     // if (Math.hypot(((this.position.x + this.position.velocity.x) - this.target.position.x ),((this.position.y) - this.target.position.y)))
-
-    if (this.position.x > this.target.x) 
-    {
-     let stepInX = (Math.hypot(((this.position.x - this.stepSpeed) - this.target.x ),((this.position.y) - this.target.y))) 
-     let stepInY = (Math.hypot(((this.position.x) - this.target.x ),((this.position.y - this.stepSpeed) - this.target.y))) 
-    
-    if (stepInX<stepInY){
-      this.velocity.x = -this.stepSpeed;
-      this.velocity.y = 0;
-    }
-    else{
-      this.velocity.x = 0;
-      this.velocity.y = -this.stepSpeed;
-    }
-  }
-
-  else  {
-    let stepInX = (Math.hypot(((this.position.x + this.stepSpeed) - this.target.x ),((this.position.y) - this.target.y))) 
-    let stepInY = (Math.hypot(((this.position.x) - this.target.x ),((this.position.y + this.stepSpeed) - this.target.y))) 
-   
-   if ((stepInX<stepInY) && ! (this.wallLeft || this.wallRight) ){
-     this.velocity.x = this.stepSpeed;
-     this.velocity.y = 0;
-   }
-   else{
-     this.velocity.x = 0;
-     this.velocity.y = this.stepSpeed;
-
-
-
-   }
- }
-
-//  if(this.wallUp || this.wallDown)
-//  {
-//    this.velocity.y=0
-//  }
-
-//  if(this.wallLeft || this.wallRight)
-//  {
-//    this.velocity.x=0;
-//  }
-
-
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
-  }
+  
+}
 }
 class Player {
   constructor({ position, velocity }) {
@@ -180,7 +134,7 @@ const ghost = new Ghost({
     y: 20 * Boundary.height - Boundary.height/2,
   },
   velocity: {
-    x: 0,
+    x: -0.1,
     y: 0,
   },
   target:{
@@ -235,22 +189,22 @@ map.forEach((row, i) => {
         }
       });
     });
+
+    ghosts.push(ghost)
     function animate() {
       requestAnimationFrame(animate);
       c.clearRect(0, 0, canvas.width, canvas.height);
-      
       player.update();
 
       ghosts.forEach((ghost)=>{
         ghost.update()
-
         const collisions = [];
-        boundaries.forEach((boundary) => {
+        boundaries.forEach ((boundary) => {
           if (!collisions.includes('up') && collisionHappening({
             char: {...ghost,
             velocity:{
               x:0,
-              y:-7,
+              y:-5,
             }
             } ,
             block: boundary,
@@ -263,7 +217,7 @@ map.forEach((row, i) => {
             char: {...ghost,
             velocity:{
               x:0,
-              y:7,
+              y:5,
             }
             } ,
             block: boundary,
@@ -275,7 +229,7 @@ map.forEach((row, i) => {
           if (!collisions.includes('left') && collisionHappening({
             char: {...ghost,
             velocity:{
-              x:-7,
+              x:-5,
               y:0,
             }
             } ,
@@ -288,7 +242,7 @@ map.forEach((row, i) => {
           if (!collisions.includes('right') && collisionHappening({
             char: {...ghost,
             velocity:{
-              x:7,
+              x:5,
               y:0,
             }
             } ,
@@ -300,6 +254,29 @@ map.forEach((row, i) => {
           }
       
         })
+        
+        
+
+        if (collisions.length > ghost.previousCollisions.length)
+            ghost.previousCollisions = collisions
+        
+        console.log({collisions})
+        console.log(ghost.previousCollisions)
+        if(JSON.stringify(collisions) !== JSON.stringify(ghost.previousCollisions)) {
+          console.log('gogo')
+          // if (ghost.velocity.x > 0) ghost.previousCollisions.push('right');
+          // else if (ghost.velocity.y > 0) ghost.previousCollisions.push('down');
+          // else if (ghost.velocity.x < 0) ghost.previousCollisions.push('left');
+          // else if (ghost.velocity.y < 0) ghost.previousCollisions.push('up');
+
+          console.log(ghost.previousCollisions)
+          const pathways = ghost.previousCollisions.filter((collision) => {
+            return !collisions.includes(collision)}
+          
+          )
+          // console.log({pathways})
+        } 
+
       })
 
         
