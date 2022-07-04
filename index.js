@@ -68,7 +68,7 @@ class Player {
   constructor({ position, velocity }) {
     this.position = position;
     this.velocity = velocity;
-    this.radius = 12;
+    this.radius = 10;
   }
 
   draw() {
@@ -85,34 +85,48 @@ class Player {
     this.position.y += this.velocity.y;
   }
 }
+// const map = [
+//   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+//   ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '-', '.', '.', '.', '-', '-', '-', '-', '.', '.', '.', '-', '.', '.', '-'],
+//   ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '.', '.', '-', '.', '.', '-', '-', '.', '.', '-', '.', '.', '.', '.', '-'],
+//   ['-', '-', '-', '.', '-', '-', '.', '-', '-', '.', '-', '-', '.', '.', '-', '-', '-'],
+//   ['-', '.', '-', '.', '-', '^', '.', '.', '.', '.', '.', '-', '.', '.', '-', '.', '-'],
+//   ['-', '-', '-', '.', '-', '+', '-', '-', '-', '-', '.', '.', '.', '.', '-', '-', '-'],
+//   ['-', '.', '.', '.', '.', '_', '-', '.', '.', '-', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '-', '-', '.', '.', '-', '.', '.', '-', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '.', '.', '.', '^', '-', '-', '-', '-', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '-', '.', '-', '5', '-', '.', '-', '.', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '-', '-', '.', '-', '5', '-', '.', '-', '.', '.', '.', '.', '.', '-', '-', '-'],
+//   ['-', '.', '.', '.', '.', '^', '-', '-', '-', '-', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '.', '.', '-', '+', '.', '-', '-', '.', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '-', '-', '.', '-', '_', '.', '.', '.', '.', '.', '-', '.', '.', '-', '-', '-'],
+//   ['-', '.', '-', '.', '-', '-', '.', '.', '.', '.', '-', '-', '.', '.', '-', '.', '-'],
+//   ['-', '-', '-', '.', '-', '.', '.', '-', '-', '.', '.', '-', '.', '.', '-', '-', '-'],
+//   ['-', '.', '.', '.', '.', '.', '.', '-', '-', '.', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
+//   ['-', '.', '-', '.', '.', '.', '-', '-', '-', '-', '.', '.', '.', '-', '.', '.', '-'],
+//   ['-', '.', '-', '.', '-', '5', '-', '.', '-', '.', '.', '.', '.', '.', '.', '.', '-'],
+
+//   ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
+
+// ];
 const map = [
-  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-  ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', '-', '.', '.', '.', '-', '-', '-', '-', '.', '.', '.', '-', '.', '.', '-'],
-  ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', '.', '.', '-', '.', '.', '-', '-', '.', '.', '-', '.', '.', '.', '.', '-'],
-  ['-', '-', '-', '.', '-', '-', '.', '[', ']', '.', '-', '-', '.', '.', '-', '-', '-'],
-  ['-', '.', '-', '.', '-', '^', '.', '.', '.', '.', '.', '-', '.', '.', '-', '.', '-'],
-  ['-', '-', '-', '.', '[', '+', '-', '-', '-', '-', '.', '.', '.', '.', '-', '-', '-'],
-  ['-', '.', '.', '.', '.', '_', '-', '.', '.', '-', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', '[', ']', '.', '.', '-', '.', '.', '-', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', '.', '.', '.', '^', '-', '-', '-', '-', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', 'b', '.', '[', '5', ']', '.', 'b', '.', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '-', '-', '.', '[', '5', ']', '.', 'b', '.', '.', '.', '.', '.', '-', '-', '-'],
-  ['-', '.', '.', '.', '.', '^', '-', '-', '-', '-', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', '.', '.', '[', '+', '.', '-', '-', '.', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '-', '-', '.', '-', '_', '.', '.', '.', '.', '.', '-', '.', '.', '-', '-', '-'],
-  ['-', '.', '-', '.', '-', '-', '.', '.', '.', '.', '-', '-', '.', '.', '-', '.', '-'],
-  ['-', '-', '-', '.', '-', '.', '.', '[', ']', '.', '.', '-', '.', '.', '-', '-', '-'],
-  ['-', '.', '.', '.', '.', '.', '.', '-', '-', '.', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '.', '-'],
-  ['-', '.', '-', '.', '.', '.', '-', '-', '-', '-', '.', '.', '.', '-', '.', '.', '-'],
-  ['-', '.', 'b', '.', '[', '5', ']', '.', 'b', '.', '.', '.', '.', '.', '.', '.', '-'],
-
-  ['-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'],
-
+  ['1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '2'],
+  ['|', '.', '.', '.', '.', '.', '.', '.', '.', '.', '|'],
+  ['|', '.', '-', '.', '-', '-', '-', '.', '-', '.', '|'],
+  ['|', '.', '.', '.', '.', '-', '.', '.', '.', '.', '|'],
+  ['|', '.', '-', '-', '.', '.', '.', '-', '-', '.', '|'],
+  ['|', '.', '.', '.', '.', '-', '.', '.', '.', '.', '|'],
+  ['|', '.', '-', '.', '-', '-', '-', '.', '-', '.', '|'],
+  ['|', '.', '.', '.', '.', '-', '.', '.', '.', '.', '|'],
+  ['|', '.', '-', '-', '.', '.', '.', '-', '-', '.', '|'],
+  ['|', '.', '.', '.', '.', '-', '.', '.', '.', '.', '|'],
+  ['|', '.', '-', '.', '-', '-', '-', '.', '-', '.', '|'],
+  ['|', '.', '.', '.', '.', '.', '.', '.', '.', 'p', '|'],
+  ['4', '-', '-', '-', '-', '-', '-', '-', '-', '-', '3']
 ];
-
 
 const boundaries = [];
 const pellets = [];
@@ -171,6 +185,56 @@ map.forEach((row, i) => {
           }),
         );
         break;
+        case '|':
+          boundaries.push(
+            new Boundary({
+              position: {
+                x: Boundary.width * j,
+                y: Boundary.height * i,
+              },
+            }),
+          );
+          break;
+          case '1':
+            boundaries.push(
+              new Boundary({
+                position: {
+                  x: Boundary.width * j,
+                  y: Boundary.height * i,
+                },
+              }),
+            );
+            break;
+            case '2':
+              boundaries.push(
+                new Boundary({
+                  position: {
+                    x: Boundary.width * j,
+                    y: Boundary.height * i,
+                  },
+                }),
+              );
+              break;
+              case '3':
+                boundaries.push(
+                  new Boundary({
+                    position: {
+                      x: Boundary.width * j,
+                      y: Boundary.height * i,
+                    },
+                  }),
+                );
+                break;
+                case '4':
+                  boundaries.push(
+                    new Boundary({
+                      position: {
+                        x: Boundary.width * j,
+                        y: Boundary.height * i,
+                      },
+                    }),
+                  );
+                  break;
         case '.':
           pellets.push(
             new Pellet({
@@ -189,6 +253,7 @@ map.forEach((row, i) => {
         }
       });
     });
+    let i =0
 
     ghosts.push(ghost)
     function animate() {
@@ -262,19 +327,21 @@ map.forEach((row, i) => {
         
         console.log({collisions})
         console.log(ghost.previousCollisions)
-        if(JSON.stringify(collisions) !== JSON.stringify(ghost.previousCollisions)) {
-          console.log('gogo')
-          // if (ghost.velocity.x > 0) ghost.previousCollisions.push('right');
-          // else if (ghost.velocity.y > 0) ghost.previousCollisions.push('down');
-          // else if (ghost.velocity.x < 0) ghost.previousCollisions.push('left');
-          // else if (ghost.velocity.y < 0) ghost.previousCollisions.push('up');
+
+        if(!(JSON.stringify(collisions) !== JSON.stringify(ghost.previousCollisions))) {
+          i = i + 1
+          console.log(i)
+          if ((ghost.velocity.x > 0) && !(ghost.previousCollisions.includes('right'))) ghost.previousCollisions.push('right');
+          else if ((ghost.velocity.y > 0) && !(ghost.previousCollisions.includes('down'))) ghost.previousCollisions.push('down');
+          else if ((ghost.velocity.x < 0) && !(ghost.previousCollisions.includes('left'))) ghost.previousCollisions.push('left');
+          else if ((ghost.velocity.y < 0) && !(ghost.previousCollisions.includes('up'))) ghost.previousCollisions.push('up');
 
           console.log(ghost.previousCollisions)
           const pathways = ghost.previousCollisions.filter((collision) => {
             return !collisions.includes(collision)}
           
           )
-          // console.log({pathways})
+          console.log({pathways})
         } 
 
       })
@@ -374,6 +441,38 @@ for (let i=pellets.length - 1; i > 0; i--){
     
   }
 };
+
+function setDirection({char, target}, pathways)
+{
+  function shortestDistanceHelper({char,target, velocity}){
+    return (Math.hypot(((char.position.x + velocity.x)  - target.position.x), ((char.position.y + velocity.y)  - target.position.y)  ))
+  }
+  let dists = []
+  pathways.forEach((path)=>{
+    switch(path){
+      case 'up':
+        dists.push(shortestDistanceHelper({char,target, velocity:{x:0, y: -7}}))
+        break;
+      case 'down':
+        dists.push(shortestDistanceHelper({char,target, velocity:{x:0, y: 7}}))
+        break;
+      case 'left':
+        dists.push(shortestDistanceHelper({char,target, velocity:{x:-7, y: 0}}))
+        break;
+      case 'right':
+        dists.push(shortestDistanceHelper({char,target, velocity:{x:7, y: 0}}))
+        break;
+
+    }
+    
+  })
+
+  const min = Math.min(...dists);
+  const index = dists.indexOf(min);
+
+  return pathways[index]
+}
+
 
 function collisionHappening({char, block})
 {
