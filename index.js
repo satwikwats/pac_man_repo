@@ -43,7 +43,7 @@ class Ghost {
     this.position = position;
     this.velocity = velocity;
     this.target = target;
-    this.radius = 10;
+    this.radius = 9;
 
     this.previousCollisions = []
   }
@@ -144,8 +144,8 @@ const player = new Player({
 });
 const ghost = new Ghost({
   position:{
-    x: 16 * Boundary.width - Boundary.width/2,
-    y: 20 * Boundary.height - Boundary.height/2,
+    x: 10 * Boundary.width - Boundary.width/2,
+    y: 10 * Boundary.height - Boundary.height/2,
   },
   velocity: {
     x: -0.1,
@@ -269,7 +269,7 @@ map.forEach((row, i) => {
             char: {...ghost,
             velocity:{
               x:0,
-              y:-5,
+              y:-7,
             }
             } ,
             block: boundary,
@@ -282,7 +282,7 @@ map.forEach((row, i) => {
             char: {...ghost,
             velocity:{
               x:0,
-              y:5,
+              y:7,
             }
             } ,
             block: boundary,
@@ -294,7 +294,7 @@ map.forEach((row, i) => {
           if (!collisions.includes('left') && collisionHappening({
             char: {...ghost,
             velocity:{
-              x:-5,
+              x:-7,
               y:0,
             }
             } ,
@@ -307,7 +307,7 @@ map.forEach((row, i) => {
           if (!collisions.includes('right') && collisionHappening({
             char: {...ghost,
             velocity:{
-              x:5,
+              x:7,
               y:0,
             }
             } ,
@@ -326,23 +326,44 @@ map.forEach((row, i) => {
             ghost.previousCollisions = collisions
         
         console.log({collisions})
-        console.log(ghost.previousCollisions)
+        // console.log(ghost.previousCollisions)
 
-        if(!(JSON.stringify(collisions) !== JSON.stringify(ghost.previousCollisions))) {
-          i = i + 1
-          console.log(i)
+        if((JSON.stringify(collisions) !== JSON.stringify(ghost.previousCollisions))) {
+
           if ((ghost.velocity.x > 0) && !(ghost.previousCollisions.includes('right'))) ghost.previousCollisions.push('right');
           else if ((ghost.velocity.y > 0) && !(ghost.previousCollisions.includes('down'))) ghost.previousCollisions.push('down');
           else if ((ghost.velocity.x < 0) && !(ghost.previousCollisions.includes('left'))) ghost.previousCollisions.push('left');
           else if ((ghost.velocity.y < 0) && !(ghost.previousCollisions.includes('up'))) ghost.previousCollisions.push('up');
 
-          console.log(ghost.previousCollisions)
+          // console.log(ghost.previousCollisions)
           const pathways = ghost.previousCollisions.filter((collision) => {
             return !collisions.includes(collision)}
-          
           )
           console.log({pathways})
+          let newDirection = setDirection(ghost, pathways)
+          console.log({newDirection})
+
+          let test_v = 0.5
+          switch(newDirection) {
+            case 'up':  
+              ghost.velocity.x = 0;
+              ghost.velocity.y = -test_v;
+              break;
+            case 'down':    
+              ghost.velocity.x = 0;
+              ghost.velocity.y = test_v;
+              break;
+            case 'left':
+              ghost.velocity.x = -test_v;
+              ghost.velocity.y = 0;
+              break;
+            case 'right':
+              ghost.velocity.x = test_v;
+              ghost.velocity.y = 0;
+              break;}
+            
         } 
+
 
       })
 
@@ -442,25 +463,26 @@ for (let i=pellets.length - 1; i > 0; i--){
   }
 };
 
-function setDirection({char, target}, pathways)
+function setDirection(char, pathways)
 {
-  function shortestDistanceHelper({char,target, velocity}){
-    return (Math.hypot(((char.position.x + velocity.x)  - target.position.x), ((char.position.y + velocity.y)  - target.position.y)  ))
+  function shortestDistanceHelper(char,target, {velocity}){
+    return (Math.hypot(((char.position.x + velocity.x)  - target.x), ((char.position.y + velocity.y)  - target.y)  ))
   }
   let dists = []
+  target = char.target
   pathways.forEach((path)=>{
     switch(path){
       case 'up':
-        dists.push(shortestDistanceHelper({char,target, velocity:{x:0, y: -7}}))
+        dists.push(shortestDistanceHelper(char,target, {velocity:{x:0, y: -0.5}}))
         break;
       case 'down':
-        dists.push(shortestDistanceHelper({char,target, velocity:{x:0, y: 7}}))
+        dists.push(shortestDistanceHelper(char,target, {velocity:{x:0, y: 0.5}}))
         break;
       case 'left':
-        dists.push(shortestDistanceHelper({char,target, velocity:{x:-7, y: 0}}))
+        dists.push(shortestDistanceHelper(char,target, {velocity:{x:-0.5, y: 0}}))
         break;
       case 'right':
-        dists.push(shortestDistanceHelper({char,target, velocity:{x:7, y: 0}}))
+        dists.push(shortestDistanceHelper(char,target, {velocity:{x:0.5, y: 0}}))
         break;
 
     }
